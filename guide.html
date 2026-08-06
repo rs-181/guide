@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience GhostLine API Live</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #050a05;
+            color: #ffffff;
+            display: flex;
+            overflow: hidden; 
+        }
+
+        /* ── LEFT SIDE: ADVERTISING & GUIDE (SCROLLABLE) ── */
+        .ad-section {
+            flex: 1; 
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #0b0c10, #002200);
+            border-right: 2px solid #00a884;
+            z-index: 10;
+            box-shadow: 5px 0 20px rgba(0, 204, 68, 0.15);
+            overflow-y: auto; 
+        }
+
+        .ad-section::-webkit-scrollbar { width: 8px; }
+        .ad-section::-webkit-scrollbar-track { background: #0b0c10; }
+        .ad-section::-webkit-scrollbar-thumb { background: #00a884; border-radius: 4px; }
+
+        .ad-section h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff55;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-top: 0;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .ad-section h2 {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00a884;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            margin-top: 0;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .ad-section > p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #c5c6c7;
+            margin-bottom: 25px;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+
+        .features li {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: #d9fdd3;
+        }
+
+        .features li::before {
+            content: '✔';
+            color: #00ff55;
+            font-weight: 900;
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: #00ff55;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0, 255, 85, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #00cc44;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 85, 0.5);
+        }
+
+        .guide-box {
+            background-color: rgba(0, 168, 132, 0.1);
+            border: 1px solid #00a884;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .guide-box h3 {
+            margin-top: 0;
+            color: #d9fdd3;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .guide-box ol {
+            margin: 0;
+            padding-left: 20px;
+            color: #c5c6c7;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .guide-box p {
+            margin-top: 0;
+            color: #c5c6c7;
+            line-height: 1.6;
+        }
+
+        .prompt-box {
+            background-color: #111b21;
+            border: 1px dashed #54656f;
+            padding: 25px;
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .prompt-box h3 {
+            margin-top: 0;
+            color: #00ff55;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .prompt-text {
+            color: #e9edef;
+            font-family: monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            background-color: #0b141a;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .copy-btn {
+            background-color: #00a884;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.05rem;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #008f6f;
+        }
+
+        /* ── RIGHT SIDE: FULL SCREEN IFRAME ── */
+        .iframe-section {
+            flex: 1.2; 
+            height: 100%;
+            background-color: #f0f2f5;
+        }
+
+        .iframe-section iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ── MOBILE RESPONSIVENESS ── */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+                overflow: auto; 
+            }
+            .ad-section {
+                flex: none;
+                padding: 30px 20px;
+                border-right: none;
+                border-bottom: 2px solid #00a884;
+                overflow-y: visible;
+            }
+            .iframe-section {
+                flex: none;
+                height: 85vh; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT SIDE: ADVERTISING, CTA, GUIDE & PROMPT -->
+    <div class="ad-section">
+        
+        <h1>GHOSTLINE API</h1>
+        <h2>Add Secure Chat To Your Website</h2>
+        
+        <p>Looking for a way to connect your users safely? Embed GhostLine's powerful, anonymous chat directly into your platform with just one line of code.</p>
+        
+        <ul class="features">
+            <li>End-to-End Encrypted Live Chat</li>
+            <li>Messages Auto-Delete in 10 Minutes</li>
+            <li>Zero Setup </li>
+            <li>Works Instantly </li>
+        </ul>
+
+        <!-- Call to Action Button -->
+        <a href="https://ghostline-chat.netlify.app" target="_blank" class="cta-btn">
+            Create Your Room Now ↗
+        </a>
+
+        <!-- Detailed Guide Box -->
+        <div class="guide-box">
+            <h3>⚙️ How to get your Embed Code:</h3>
+            <ol>
+                <li>Visit <strong>ghostline-chat.netlify.app</strong></li>
+                <li>Create a new room or Join an existing one.</li>
+                <li>Click the <strong>3-dots menu (⋮)</strong> at the top right of the chat.</li>
+                <li>Select <strong>"DEVELOPER API"</strong>.</li>
+                <li>If your room is Private, enter the Secret Code.</li>
+                <li>Click <strong>GENERATE CODE</strong> and copy your secure Iframe link.</li>
+            </ol>
+        </div>
+
+        <!-- NEW: Default API Test Box -->
+        <div class="guide-box" style="background-color: rgba(0, 255, 85, 0.05); border-color: #54656f;">
+            <h3 style="color: #00ff55;">🏢 Test with Official GhostLine Room:</h3>
+            <p>Don't have a room yet? Use our official testing room to try the API instantly.</p>
+            <div class="prompt-text" id="defaultApiText">&lt;iframe src="https://ghostline-chat.netlify.app/embed.html?room=twxk38n5mmp96sp2" width="100%" height="500" style="border: 2px solid #00a884; border-radius: 12px; overflow: hidden; max-width: 400px;" allow="microphone"&gt;&lt;/iframe&gt;</div>
+            <button class="copy-btn" style="background-color: #54656f;" onclick="copyDefaultAPI()">📋 Copy Default API</button>
+        </div>
+
+        <!-- Full Magic AI Prompt Box -->
+        <div class="prompt-box">
+            <h3>🪄 Build a website using AI:</h3>
+            <div class="prompt-text" id="aiPromptText">Act as an expert frontend web developer. I want to build a modern, responsive, and beautiful [Community / Gaming / Customer Support / Blog] website.
+
+I have an end-to-end encrypted chat widget from GhostLine that I want to embed on the page. Please create a complete, single-file HTML and CSS layout for my website. Design it so the main content is on the left, and the chat widget is clearly visible and perfectly fitted on the right side (or perfectly stacked on mobile).
+
+Here is my GhostLine API Embed Code:
+[PASTE YOUR COPIED IFRAME CODE HERE]
+
+Make the design look professional, use a modern color scheme, and ensure the iframe has no borders and fits seamlessly into the design.</div>
+            <button class="copy-btn" onclick="copyPromptText()">📋 Copy Magic AI Prompt</button>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: LIVE DEMO IFRAME -->
+    <div class="iframe-section">
+        <iframe 
+            src="https://ghostline-chat.netlify.app/embed.html?room=twxk38n5mmp96sp2" 
+            allow="microphone"
+            title="GhostLine API Live Demo">
+        </iframe>
+    </div>
+
+    <script>
+        function copyPromptText() {
+            const promptText = document.getElementById("aiPromptText").innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                const btns = document.querySelectorAll('.copy-btn');
+                const btn = btns[1]; // Second button is the AI prompt
+                btn.innerText = "✅ Copied Successfully!";
+                btn.style.backgroundColor = "#00ff55";
+                btn.style.color = "#000";
+                
+                setTimeout(() => {
+                    btn.innerText = "📋 Copy Magic AI Prompt";
+                    btn.style.backgroundColor = "#00a884";
+                    btn.style.color = "#fff";
+                }, 2500);
+            }).catch(err => {
+                alert("Failed to copy. Please try manually.");
+            });
+        }
+
+        function copyDefaultAPI() {
+            const defaultText = document.getElementById("defaultApiText").innerText;
+            navigator.clipboard.writeText(defaultText).then(() => {
+                const btns = document.querySelectorAll('.copy-btn');
+                const btn = btns[0]; // First button is the Default API
+                btn.innerText = "✅ API Copied!";
+                btn.style.backgroundColor = "#00ff55";
+                btn.style.color = "#000";
+                
+                setTimeout(() => {
+                    btn.innerText = "📋 Copy Default API";
+                    btn.style.backgroundColor = "#54656f";
+                    btn.style.color = "#fff";
+                }, 2500);
+            }).catch(err => {
+                alert("Failed to copy. Please try manually.");
+            });
+        }
+    </script>
+</body>
+</html>
